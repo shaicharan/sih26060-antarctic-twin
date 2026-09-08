@@ -24,22 +24,22 @@ export default function StationDashboard({ data }) {
     switch (String(level).toUpperCase()) {
       case 'HIGH':
         return {
-          bg: 'bg-red-950/80 border-red-600/60 text-red-300',
+          bg: 'bg-red-50 text-red-700 border-red-200',
           dot: 'bg-red-500 animate-pulse',
-          label: 'HIGH RISK',
+          label: '▲ HIGH RISK',
         };
       case 'MODERATE':
         return {
-          bg: 'bg-amber-950/80 border-amber-600/60 text-amber-300',
+          bg: 'bg-amber-50 text-amber-700 border-amber-200',
           dot: 'bg-amber-500 animate-pulse',
-          label: 'MODERATE RISK',
+          label: '▲ MODERATE RISK',
         };
       case 'LOW':
       default:
         return {
-          bg: 'bg-emerald-950/80 border-emerald-600/60 text-emerald-300',
+          bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
           dot: 'bg-emerald-500',
-          label: 'LOW RISK',
+          label: '▲ LOW RISK',
         };
     }
   };
@@ -48,118 +48,157 @@ export default function StationDashboard({ data }) {
 
   return (
     <div className="w-full mb-8">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-          <span>📊</span> Station Telemetry Overview
-        </h2>
-        <span className="text-xs text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700">
-          Source: {source}
-        </span>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Stat Card 1: Outdoor Temperature (REAL Data) */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 shadow-lg relative overflow-hidden group hover:border-cyan-500/50 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-cyan-500/10 rounded-full blur-xl group-hover:bg-cyan-500/20 transition-all"></div>
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Outdoor Temperature
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-700/60 uppercase tracking-wider">
+        <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md hover:border-blue-300 transition-all duration-200 flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
+                  OUTDOOR TEMPERATURE
+                </span>
+              </div>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wider">
                 REAL
               </span>
-              <span className="text-xl">🌡️</span>
             </div>
-          </div>
-          <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-3xl font-extrabold text-cyan-400">{temp}</span>
-            <span className="text-lg text-slate-400 font-medium">°C</span>
-          </div>
-          <p className="text-xs text-slate-400 mt-2 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-            Ambient Antarctic Temp
-          </p>
-        </div>
 
-        {/* Stat Card 2: Battery Percentage (SIMULATED Data) */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 shadow-lg relative overflow-hidden group hover:border-blue-500/50 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all"></div>
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Backup Battery
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-950/80 text-blue-400 border border-blue-700/60 uppercase tracking-wider">
-                SIMULATED
-              </span>
-              <span className="text-xl">🔋</span>
+            <div className="flex items-baseline gap-1 mt-1">
+              <span className="text-3xl font-bold font-serif text-navy-900">{temp}</span>
+              <span className="text-lg text-slate-500 font-sans font-medium">°C</span>
             </div>
           </div>
-          <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-3xl font-extrabold text-blue-400">{battery}</span>
-            <span className="text-lg text-slate-400 font-medium">%</span>
-          </div>
-          {/* Progress bar */}
-          <div className="w-full bg-slate-800 rounded-full h-1.5 mt-3 overflow-hidden">
-            <div
-              className={`h-full rounded-full ${
-                battery > 50 ? 'bg-blue-400' : battery > 20 ? 'bg-amber-400' : 'bg-red-500'
-              }`}
-              style={{ width: `${Math.min(100, Math.max(0, Number(battery) || 0))}%` }}
-            ></div>
+
+          <div className="mt-4 flex items-end justify-between">
+            <p className="text-xs text-slate-500 flex items-center gap-1.5 font-sans">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+              Ambient Antarctic Temp
+            </p>
+            {/* Sparkline Graphic */}
+            <svg className="w-16 h-8 text-blue-500 shrink-0 opacity-80" viewBox="0 0 60 25" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M 0 18 Q 15 5 30 15 T 60 8" strokeLinecap="round" />
+            </svg>
           </div>
         </div>
 
-        {/* Stat Card 3: Fuel Days Remaining (SIMULATED Data) */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 shadow-lg relative overflow-hidden group hover:border-amber-500/50 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition-all"></div>
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Fuel Autonomy
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-950/80 text-blue-400 border border-blue-700/60 uppercase tracking-wider">
+        {/* Stat Card 2: Backup Battery (SIMULATED Data) */}
+        <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md hover:border-blue-300 transition-all duration-200 flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
+                  BACKUP BATTERY
+                </span>
+              </div>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wider">
                 SIMULATED
               </span>
-              <span className="text-xl">🛢️</span>
+            </div>
+
+            <div className="flex items-baseline gap-1 mt-1">
+              <span className="text-3xl font-bold font-serif text-navy-900">{battery}</span>
+              <span className="text-lg text-slate-500 font-sans font-medium">%</span>
             </div>
           </div>
-          <div className="flex items-baseline gap-1.5 mt-1">
-            <span className="text-3xl font-extrabold text-amber-400">{fuelDays}</span>
-            <span className="text-sm text-slate-400 font-medium">days left</span>
+
+          <div className="mt-4">
+            <p className="text-xs text-slate-500 font-sans mb-2">
+              Simulated after depletion rate model
+            </p>
+            {/* Progress Bar */}
+            <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden border border-slate-200/60">
+              <div
+                className={`h-full rounded-full transition-all duration-500 ${
+                  Number(battery) > 50 ? 'bg-blue-600' : Number(battery) > 20 ? 'bg-amber-500' : 'bg-red-600'
+                }`}
+                style={{ width: `${Math.min(100, Math.max(0, Number(battery) || 0))}%` }}
+              ></div>
+            </div>
           </div>
-          <p className="text-xs text-slate-400 mt-2">
+        </div>
+
+        {/* Stat Card 3: Fuel Autonomy (SIMULATED Data) */}
+        <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md hover:border-blue-300 transition-all duration-200 flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
+                  FUEL AUTONOMY
+                </span>
+              </div>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wider">
+                SIMULATED
+              </span>
+            </div>
+
+            <div className="flex items-baseline gap-1.5 mt-1">
+              <span className="text-3xl font-bold font-serif text-navy-900">{fuelDays}</span>
+              <span className="text-xs text-slate-500 font-sans font-medium">days left</span>
+            </div>
+          </div>
+
+          <p className="text-xs text-slate-500 mt-4 font-sans">
             Depletion rate based on generator load
           </p>
         </div>
 
-        {/* Stat Card 4: Overall Risk Level (SIMULATED Data) */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition-all duration-300 flex flex-col justify-between">
-          <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Overall Station Risk
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-950/80 text-blue-400 border border-blue-700/60 uppercase tracking-wider">
+        {/* Stat Card 4: Overall Station Risk (SIMULATED Data) */}
+        <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md hover:border-blue-300 transition-all duration-200 flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751A11.959 11.959 0 0112 2.714z" />
+                  </svg>
+                </div>
+                <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
+                  OVERALL STATION RISK
+                </span>
+              </div>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wider">
                 SIMULATED
               </span>
-              <span className="text-xl">⚠️</span>
+            </div>
+
+            <div className="mt-2">
+              <span
+                className={`inline-flex items-center gap-2 px-3 py-1 rounded-md border text-xs font-bold font-mono tracking-wide ${riskBadge.bg}`}
+              >
+                <span className={`w-2 h-2 rounded-full ${riskBadge.dot}`}></span>
+                {riskBadge.label}
+              </span>
             </div>
           </div>
-          <div className="mt-1">
-            <span
-              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm font-bold tracking-wide ${riskBadge.bg}`}
-            >
-              <span className={`w-2.5 h-2.5 rounded-full ${riskBadge.dot}`}></span>
-              {riskBadge.label}
-            </span>
+
+          <div className="mt-4 flex items-end justify-between">
+            <p className="text-xs text-slate-500 font-sans">
+              Real-time automated hazard engine
+            </p>
+            {/* Spider / Radar Hazard Graphic */}
+            <svg className="w-12 h-12 text-blue-400 opacity-60 shrink-0" viewBox="0 0 40 40">
+              <polygon points="20,4 35,13 35,31 20,38 5,31 5,13" fill="none" stroke="currentColor" strokeWidth="1" />
+              <polygon points="20,10 30,16 30,28 20,33 10,28 10,16" fill="rgba(2, 132, 199, 0.15)" stroke="#0284C7" strokeWidth="1.5" />
+            </svg>
           </div>
-          <p className="text-xs text-slate-400 mt-3">
-            Real-time automated hazard engine
-          </p>
         </div>
       </div>
     </div>
   );
+
 }

@@ -158,53 +158,57 @@ export default function WhatIfPanel({ baselineData }) {
   };
 
   return (
-    <div className="w-full bg-slate-900/90 border border-slate-800 rounded-xl p-6 shadow-xl mb-8">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800">
+    <div className="w-full bg-white border border-slate-200/80 rounded-2xl p-6 md:p-7 shadow-sm mb-8">
+      {/* Header Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-200/80">
         <div>
-          <h2 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-            <span>🧪</span> What-If Scenario Simulator
+          <h2 className="text-xl font-serif font-bold text-navy-900 flex items-center gap-2.5">
+            <span className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 text-sm shrink-0">
+              🧪
+            </span>
+            What-If Scenario Simulator
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1 font-sans">
             Adjust station operating conditions to evaluate energy demand, fuel burn rates, and risk impact via live backend model.
           </p>
         </div>
         <button
           onClick={handleSimulate}
           disabled={isSimulating}
-          className={`font-bold px-6 py-2.5 rounded-lg shadow-lg text-sm flex items-center justify-center gap-2 transition-all duration-200 ${
+          className={`font-sans font-semibold px-6 py-2.5 rounded-lg shadow-sm text-xs flex items-center justify-center gap-2 transition-all duration-200 shrink-0 ${
             isSimulating
-              ? 'bg-slate-800 text-slate-400 cursor-not-allowed border border-slate-700'
-              : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-cyan-500/20 active:scale-95'
+              ? 'bg-slate-200 text-slate-500 cursor-not-allowed border border-slate-300'
+              : 'bg-navy-900 hover:bg-navy-800 text-white active:scale-95 shadow-navy-900/10'
           }`}
         >
           {isSimulating ? (
             <>
-              <span className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></span>
+              <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               <span>Simulating...</span>
             </>
           ) : (
             <>
-              <span>⚡</span> Simulate Scenario
+              <span>⚡</span> Simulate Scenario &rarr;
             </>
           )}
         </button>
       </div>
 
       {simError && (
-        <div className="mb-6 p-4 bg-red-950/80 border border-red-800 rounded-lg text-red-300 text-xs">
-          ⚠️ <strong>Simulation Error:</strong> {simError}
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs flex items-center gap-2 font-sans shadow-xs">
+          <span>⚠️</span> <strong>Simulation Error:</strong> {simError}
         </div>
       )}
 
       {/* Slider Controls Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
         {/* Slider 1: Outdoor Temperature */}
-        <div className="bg-slate-950/70 border border-slate-800 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              Outdoor Temperature
+        <div className="bg-slate-50/80 border border-slate-200/70 rounded-xl p-4.5 transition-all hover:border-blue-300">
+          <div className="flex justify-between items-center mb-2.5">
+            <label className="text-[11px] font-mono font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+              <span>🌡️</span> OUTDOOR TEMPERATURE
             </label>
-            <span className="text-sm font-bold text-cyan-400">{temp} °C</span>
+            <span className="text-sm font-bold font-mono text-blue-600 bg-white px-2 py-0.5 rounded border border-slate-200">{temp} °C</span>
           </div>
           <input
             type="range"
@@ -213,21 +217,21 @@ export default function WhatIfPanel({ baselineData }) {
             step="1"
             value={temp}
             onChange={(e) => setTemp(parseFloat(e.target.value))}
-            className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+            className="w-full my-2"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1.5 font-mono">
+          <div className="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
             <span>-50 °C (Blizzard)</span>
             <span>+10 °C (Summer)</span>
           </div>
         </div>
 
         {/* Slider 2: Crew Size */}
-        <div className="bg-slate-950/70 border border-slate-800 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              Station Crew Size
+        <div className="bg-slate-50/80 border border-slate-200/70 rounded-xl p-4.5 transition-all hover:border-blue-300">
+          <div className="flex justify-between items-center mb-2.5">
+            <label className="text-[11px] font-mono font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+              <span>👥</span> STATION CREW SIZE
             </label>
-            <span className="text-sm font-bold text-blue-400">{crewSize} Members</span>
+            <span className="text-sm font-bold font-mono text-blue-600 bg-white px-2 py-0.5 rounded border border-slate-200">{crewSize} Members</span>
           </div>
           <input
             type="range"
@@ -236,21 +240,21 @@ export default function WhatIfPanel({ baselineData }) {
             step="1"
             value={crewSize}
             onChange={(e) => setCrewSize(parseInt(e.target.value, 10))}
-            className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-400"
+            className="w-full my-2"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1.5 font-mono">
+          <div className="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
             <span>5 Members (Skeleton)</span>
             <span>50 Members (Peak)</span>
           </div>
         </div>
 
         {/* Slider 3: Generator Efficiency */}
-        <div className="bg-slate-950/70 border border-slate-800 rounded-lg p-4">
-          <div className="flex justify-between items-center mb-2">
-            <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
-              Generator Efficiency
+        <div className="bg-slate-50/80 border border-slate-200/70 rounded-xl p-4.5 transition-all hover:border-blue-300">
+          <div className="flex justify-between items-center mb-2.5">
+            <label className="text-[11px] font-mono font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+              <span>⚙️</span> GENERATOR EFFICIENCY
             </label>
-            <span className="text-sm font-bold text-amber-400">{generatorEff} %</span>
+            <span className="text-sm font-bold font-mono text-blue-600 bg-white px-2 py-0.5 rounded border border-slate-200">{generatorEff} %</span>
           </div>
           <input
             type="range"
@@ -259,9 +263,9 @@ export default function WhatIfPanel({ baselineData }) {
             step="1"
             value={generatorEff}
             onChange={(e) => setGeneratorEff(parseFloat(e.target.value))}
-            className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
+            className="w-full my-2"
           />
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1.5 font-mono">
+          <div className="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
             <span>50 % (Degraded)</span>
             <span>100 % (Optimal)</span>
           </div>
@@ -270,43 +274,43 @@ export default function WhatIfPanel({ baselineData }) {
 
       {/* Before / After Comparison Table & Conversational AI Advisor */}
       {simulationResult && (
-        <div className="mt-6 bg-slate-950/90 border border-slate-800 rounded-xl overflow-hidden shadow-2xl animate-fade-in">
-          <div className="px-5 py-3.5 bg-slate-900 border-b border-slate-800 flex justify-between items-center">
-            <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-              <span>📋</span> Backend Simulation Results & Impact Analysis
+        <div className="mt-8 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm animate-fade-in">
+          <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+            <h3 className="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+              <span className="text-blue-600">📊</span> Backend Simulation Results & Impact Analysis
             </h3>
-            <span className="text-xs text-cyan-400 font-mono bg-cyan-950/60 px-2.5 py-0.5 rounded border border-cyan-800">
-              POST /simulate Executed
+            <span className="text-[10px] text-blue-700 font-mono bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
+              &lt;/&gt; Post / Simulate Executed
             </span>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="text-xs text-slate-400 uppercase bg-slate-900/50 border-b border-slate-800">
+            <table className="w-full text-left text-sm text-slate-700 font-sans">
+              <thead className="text-[11px] font-mono text-slate-500 uppercase bg-slate-50/70 border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3 font-semibold">Parameter / Metric</th>
-                  <th className="px-5 py-3 font-semibold text-slate-400">Baseline (Before)</th>
-                  <th className="px-5 py-3 font-semibold text-cyan-400">Simulated (After)</th>
-                  <th className="px-5 py-3 font-semibold text-right">Variance / Delta</th>
+                  <th className="px-5 py-3 font-bold">PARAMETER / METRIC</th>
+                  <th className="px-5 py-3 font-bold text-slate-500">BASELINE (BEFORE)</th>
+                  <th className="px-5 py-3 font-bold text-blue-700">SIMULATED (AFTER)</th>
+                  <th className="px-5 py-3 font-bold text-right">VARIANCE / DELTA</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100 font-sans">
                 {/* Temp */}
-                <tr className="hover:bg-slate-900/40">
-                  <td className="px-5 py-3 font-medium text-slate-200">Outdoor Temperature</td>
-                  <td className="px-5 py-3">{simulationResult.before.environment.outdoor_temperature_celsius} °C</td>
-                  <td className="px-5 py-3 font-bold text-cyan-300">{simulationResult.after.environment.outdoor_temperature_celsius} °C</td>
-                  <td className="px-5 py-3 text-right font-mono text-xs">
+                <tr className="hover:bg-slate-50/50">
+                  <td className="px-5 py-3 font-medium text-slate-800">Outdoor Temperature</td>
+                  <td className="px-5 py-3 font-mono text-xs">{simulationResult.before.environment.outdoor_temperature_celsius} °C</td>
+                  <td className="px-5 py-3 font-mono text-xs font-bold text-blue-700">{simulationResult.after.environment.outdoor_temperature_celsius} °C</td>
+                  <td className="px-5 py-3 text-right font-mono text-xs text-slate-600">
                     {simulationResult.comparison.temperature_delta_celsius > 0 ? `+${simulationResult.comparison.temperature_delta_celsius}` : simulationResult.comparison.temperature_delta_celsius} °C
                   </td>
                 </tr>
 
                 {/* Crew */}
-                <tr className="hover:bg-slate-900/40">
-                  <td className="px-5 py-3 font-medium text-slate-200">Crew Size</td>
-                  <td className="px-5 py-3">{simulationResult.before.environment.crew_size} members</td>
-                  <td className="px-5 py-3 font-bold text-blue-300">{simulationResult.after.environment.crew_size} members</td>
-                  <td className="px-5 py-3 text-right font-mono text-xs">
+                <tr className="hover:bg-slate-50/50">
+                  <td className="px-5 py-3 font-medium text-slate-800">Crew Size</td>
+                  <td className="px-5 py-3 font-mono text-xs">{simulationResult.before.environment.crew_size} members</td>
+                  <td className="px-5 py-3 font-mono text-xs font-bold text-blue-700">{simulationResult.after.environment.crew_size} members</td>
+                  <td className="px-5 py-3 text-right font-mono text-xs text-slate-600">
                     {simulationResult.after.environment.crew_size - simulationResult.before.environment.crew_size > 0
                       ? `+${simulationResult.after.environment.crew_size - simulationResult.before.environment.crew_size}`
                       : simulationResult.after.environment.crew_size - simulationResult.before.environment.crew_size}
@@ -314,11 +318,11 @@ export default function WhatIfPanel({ baselineData }) {
                 </tr>
 
                 {/* Generator Efficiency */}
-                <tr className="hover:bg-slate-900/40">
-                  <td className="px-5 py-3 font-medium text-slate-200">Generator Efficiency</td>
-                  <td className="px-5 py-3">{simulationResult.before.energy.generator_efficiency_pct}%</td>
-                  <td className="px-5 py-3 font-bold text-amber-300">{simulationResult.after.energy.generator_efficiency_pct}%</td>
-                  <td className="px-5 py-3 text-right font-mono text-xs">
+                <tr className="hover:bg-slate-50/50">
+                  <td className="px-5 py-3 font-medium text-slate-800">Generator Efficiency</td>
+                  <td className="px-5 py-3 font-mono text-xs">{simulationResult.before.energy.generator_efficiency_pct}%</td>
+                  <td className="px-5 py-3 font-mono text-xs font-bold text-blue-700">{simulationResult.after.energy.generator_efficiency_pct}%</td>
+                  <td className="px-5 py-3 text-right font-mono text-xs text-slate-600">
                     {round2(simulationResult.after.energy.generator_efficiency_pct - simulationResult.before.energy.generator_efficiency_pct) > 0
                       ? `+${round2(simulationResult.after.energy.generator_efficiency_pct - simulationResult.before.energy.generator_efficiency_pct)}`
                       : round2(simulationResult.after.energy.generator_efficiency_pct - simulationResult.before.energy.generator_efficiency_pct)}%
@@ -326,57 +330,57 @@ export default function WhatIfPanel({ baselineData }) {
                 </tr>
 
                 {/* Total Energy Demand */}
-                <tr className="hover:bg-slate-900/40">
-                  <td className="px-5 py-3 font-medium text-slate-200">Total Energy Demand</td>
-                  <td className="px-5 py-3">{simulationResult.before.energy.total_demand_kw} kW</td>
-                  <td className="px-5 py-3 font-bold text-slate-100">{simulationResult.after.energy.total_demand_kw} kW</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="px-5 py-3 font-medium text-slate-800">Total Energy Demand</td>
+                  <td className="px-5 py-3 font-mono text-xs">{simulationResult.before.energy.total_demand_kw} kW</td>
+                  <td className="px-5 py-3 font-mono text-xs font-bold text-slate-900">{simulationResult.after.energy.total_demand_kw} kW</td>
                   <td className="px-5 py-3 text-right font-mono text-xs font-semibold">
-                    <span className={simulationResult.comparison.total_demand_delta_kw > 0 ? 'text-red-400' : 'text-emerald-400'}>
+                    <span className={simulationResult.comparison.total_demand_delta_kw > 0 ? 'text-red-600' : 'text-emerald-600'}>
                       {simulationResult.comparison.total_demand_delta_kw > 0 ? `+${simulationResult.comparison.total_demand_delta_kw}` : simulationResult.comparison.total_demand_delta_kw} kW
                     </span>
                   </td>
                 </tr>
 
                 {/* Daily Fuel Burn Rate */}
-                <tr className="hover:bg-slate-900/40">
-                  <td className="px-5 py-3 font-medium text-slate-200">Estimated Fuel Consumption</td>
-                  <td className="px-5 py-3">{simulationResult.before.fuel.consumption_rate_lpd} L/day</td>
-                  <td className="px-5 py-3 font-bold text-slate-100">{simulationResult.after.fuel.consumption_rate_lpd} L/day</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="px-5 py-3 font-medium text-slate-800">Estimated Fuel Consumption</td>
+                  <td className="px-5 py-3 font-mono text-xs">{simulationResult.before.fuel.consumption_rate_lpd} L/day</td>
+                  <td className="px-5 py-3 font-mono text-xs font-bold text-slate-900">{simulationResult.after.fuel.consumption_rate_lpd} L/day</td>
                   <td className="px-5 py-3 text-right font-mono text-xs font-semibold">
-                    <span className={simulationResult.comparison.fuel_consumption_rate_delta_lpd > 0 ? 'text-red-400' : 'text-emerald-400'}>
+                    <span className={simulationResult.comparison.fuel_consumption_rate_delta_lpd > 0 ? 'text-red-600' : 'text-emerald-600'}>
                       {simulationResult.comparison.fuel_consumption_rate_delta_lpd > 0 ? `+${simulationResult.comparison.fuel_consumption_rate_delta_lpd}` : simulationResult.comparison.fuel_consumption_rate_delta_lpd} L/day
                     </span>
                   </td>
                 </tr>
 
                 {/* Fuel Days Remaining */}
-                <tr className="hover:bg-slate-900/40">
-                  <td className="px-5 py-3 font-medium text-slate-200">Fuel Days Remaining</td>
-                  <td className="px-5 py-3">{simulationResult.before.fuel.days_remaining} days</td>
-                  <td className="px-5 py-3 font-bold text-amber-400">{simulationResult.after.fuel.days_remaining} days</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="px-5 py-3 font-medium text-slate-800">Fuel Days Remaining</td>
+                  <td className="px-5 py-3 font-mono text-xs">{simulationResult.before.fuel.days_remaining} days</td>
+                  <td className="px-5 py-3 font-mono text-xs font-bold text-amber-700">{simulationResult.after.fuel.days_remaining} days</td>
                   <td className="px-5 py-3 text-right font-mono text-xs font-semibold">
-                    <span className={simulationResult.comparison.fuel_days_remaining_delta < 0 ? 'text-red-400' : 'text-emerald-400'}>
+                    <span className={simulationResult.comparison.fuel_days_remaining_delta < 0 ? 'text-red-600' : 'text-emerald-600'}>
                       {simulationResult.comparison.fuel_days_remaining_delta > 0 ? `+${simulationResult.comparison.fuel_days_remaining_delta}` : simulationResult.comparison.fuel_days_remaining_delta} days
                     </span>
                   </td>
                 </tr>
 
                 {/* Risk Level */}
-                <tr className="bg-slate-900/60">
-                  <td className="px-5 py-3.5 font-bold text-slate-100">Station Risk Status</td>
+                <tr className="bg-slate-50/60 font-medium">
+                  <td className="px-5 py-3.5 font-bold text-slate-900">Station Risk Status</td>
                   <td className="px-5 py-3.5">
-                    <span className="px-2.5 py-1 rounded text-xs font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
+                    <span className="px-2.5 py-0.5 rounded text-xs font-bold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">
                       {simulationResult.comparison.risk_level_before}
                     </span>
                   </td>
                   <td className="px-5 py-3.5">
                     <span
-                      className={`px-2.5 py-1 rounded text-xs font-bold border ${
+                      className={`px-2.5 py-0.5 rounded text-xs font-bold font-mono border ${
                         simulationResult.comparison.risk_level_after === 'HIGH'
-                          ? 'bg-red-950 text-red-400 border-red-800'
+                          ? 'bg-red-50 text-red-700 border-red-200'
                           : simulationResult.comparison.risk_level_after === 'MODERATE'
-                          ? 'bg-amber-950 text-amber-400 border-amber-800'
-                          : 'bg-emerald-950 text-emerald-400 border-emerald-800'
+                          ? 'bg-amber-50 text-amber-700 border-amber-200'
+                          : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                       }`}
                     >
                       {simulationResult.comparison.risk_level_after}
@@ -384,9 +388,9 @@ export default function WhatIfPanel({ baselineData }) {
                   </td>
                   <td className="px-5 py-3.5 text-right font-mono text-xs font-semibold">
                     {simulationResult.comparison.risk_level_changed ? (
-                      <span className="text-amber-400 animate-pulse">RISK LEVEL CHANGED</span>
+                      <span className="text-amber-600 animate-pulse">RISK LEVEL CHANGED</span>
                     ) : (
-                      <span className="text-slate-500">UNCHANGED</span>
+                      <span className="text-slate-400">UNCHANGED</span>
                     )}
                   </td>
                 </tr>
@@ -394,56 +398,56 @@ export default function WhatIfPanel({ baselineData }) {
             </table>
           </div>
 
-          {/* Conversational Gemini AI Advisor Panel */}
-          <div className="p-5 bg-slate-900/95 border-t border-slate-800">
+          {/* Conversational Gemini AI Advisor Panel (Operational Decision Support UI) */}
+          <div className="p-6 bg-slate-50/90 border-t border-slate-200">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-r from-purple-500 to-indigo-600 flex items-center justify-center text-xs shadow">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 text-xs shadow-xs shrink-0">
                   ✨
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+                  <h4 className="text-xs font-mono font-bold text-navy-900 uppercase tracking-wider">
                     Gemini Operations Advisor
                   </h4>
-                  <p className="text-[10px] text-slate-400">
-                    Ask questions or explore scenario impacts with the AI station advisor
+                  <p className="text-[11px] text-slate-500 font-sans">
+                    Operational decision-support layer grounded in real simulation data
                   </p>
                 </div>
               </div>
-              <span className="text-[10px] text-purple-300 font-mono bg-purple-950/80 px-2.5 py-1 rounded border border-purple-800">
+              <span className="text-[10px] text-blue-700 font-mono bg-white px-2.5 py-1 rounded border border-blue-200">
                 POST /advise
               </span>
             </div>
 
             {/* Conversation Thread */}
-            <div className="space-y-3 mb-4 max-h-80 overflow-y-auto pr-1">
+            <div className="space-y-4 mb-4 max-h-96 overflow-y-auto pr-1">
               {conversationHistory.map((turn, idx) => (
-                <div key={idx} className="space-y-2">
+                <div key={idx} className="space-y-2.5">
                   {turn.question && (
                     <div className="flex justify-end">
-                      <div className="bg-purple-950/70 border border-purple-800/80 text-purple-200 rounded-xl px-4 py-2 text-xs max-w-xl">
-                        <span className="font-semibold text-purple-400 text-[10px] block mb-0.5">👤 User / Judge Question</span>
+                      <div className="bg-blue-50 border border-blue-200 text-navy-900 rounded-xl px-4 py-2.5 text-xs max-w-xl shadow-xs font-sans">
+                        <span className="font-mono font-semibold text-blue-700 text-[10px] block mb-0.5 uppercase tracking-wider">👤 User / Judge Question</span>
                         {turn.question}
                       </div>
                     </div>
                   )}
                   <div className="flex justify-start">
-                    <div className={`border rounded-xl p-4 text-xs max-w-2xl shadow-inner ${
+                    <div className={`border rounded-xl p-4.5 text-xs max-w-2xl shadow-xs font-sans leading-relaxed ${
                       turn.isFallback
-                        ? 'bg-amber-950/40 border-amber-700/60 text-amber-200'
-                        : 'bg-slate-950/90 border-purple-900/50 text-slate-200'
+                        ? 'bg-amber-50/80 border-amber-200 text-amber-900'
+                        : 'bg-white border-slate-200 text-slate-800'
                     }`}>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold text-indigo-400 text-[10px] flex items-center gap-1">
-                          <span>✨</span> {turn.isFallback ? 'AI Advisor Fallback' : 'Gemini Operations Advisor'}
+                      <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-100">
+                        <span className="font-mono font-bold text-blue-800 text-[11px] flex items-center gap-1.5 uppercase tracking-wider">
+                          <span>✨</span> {turn.isFallback ? 'AI Advisor Fallback' : 'Gemini Operations Analysis'}
                         </span>
                         {turn.isFallback && (
-                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-900/80 text-amber-300 border border-amber-700 uppercase">
-                            Fallback
+                          <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 uppercase">
+                            Fallback Mode
                           </span>
                         )}
                       </div>
-                      <p className="whitespace-pre-wrap leading-relaxed">{turn.answer}</p>
+                      <p className="whitespace-pre-wrap">{turn.answer}</p>
                     </div>
                   </div>
                 </div>
@@ -451,8 +455,8 @@ export default function WhatIfPanel({ baselineData }) {
 
               {isAdvising && (
                 <div className="flex justify-start">
-                  <div className="bg-slate-950/80 border border-slate-800 text-purple-300 rounded-xl px-4 py-3 text-xs flex items-center gap-2">
-                    <span className="w-3.5 h-3.5 border-2 border-purple-400 border-t-transparent rounded-full animate-spin"></span>
+                  <div className="bg-white border border-slate-200 text-blue-700 rounded-xl px-4 py-3 text-xs flex items-center gap-2 shadow-xs font-sans">
+                    <span className="w-3.5 h-3.5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></span>
                     <span>Gemini AI Advisor is analyzing station numbers...</span>
                   </div>
                 </div>
@@ -460,22 +464,22 @@ export default function WhatIfPanel({ baselineData }) {
             </div>
 
             {/* Interactive Question Form */}
-            <form onSubmit={handleAskQuestion} className="flex gap-2 pt-2 border-t border-slate-800/60">
+            <form onSubmit={handleAskQuestion} className="flex gap-2.5 pt-3 border-t border-slate-200">
               <input
                 type="text"
                 value={userQuestion}
                 onChange={(e) => setUserQuestion(e.target.value)}
                 placeholder="Ask follow-up (e.g. 'Why did risk increase?', 'What if temperature drops 10 degrees?')"
                 disabled={isAdvising}
-                className="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 transition"
+                className="flex-1 bg-white border border-slate-300 rounded-lg px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 font-sans transition shadow-xs"
               />
               <button
                 type="submit"
                 disabled={isAdvising || !userQuestion.trim()}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+                className={`px-5 py-2.5 rounded-lg text-xs font-sans font-bold transition flex items-center gap-1.5 shrink-0 ${
                   isAdvising || !userQuestion.trim()
-                    ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
-                    : 'bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-500/20 active:scale-95'
+                    ? 'bg-slate-200 text-slate-400 cursor-not-allowed border border-slate-300'
+                    : 'bg-navy-900 hover:bg-navy-800 text-white shadow-sm active:scale-95'
                 }`}
               >
                 <span>Ask Advisor</span>
@@ -487,6 +491,7 @@ export default function WhatIfPanel({ baselineData }) {
       )}
     </div>
   );
+
 }
 
 function round2(num) {

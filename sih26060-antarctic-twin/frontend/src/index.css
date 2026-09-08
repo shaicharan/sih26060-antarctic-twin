@@ -2,14 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #0b132b;
-  color: #f8fafc;
+:root {
+  --color-background: #F3F7FA;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F8FAFC;
+  --color-navy: #0A192F;
+  --color-blue: #0284C7;
+  --color-cyan: #0284C7;
+  --color-success: #059669;
+  --color-border: #E2E8F0;
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* Custom range slider styling */
-input[type=range] {
-  accent-color: #38bdf8;
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: #1E293B;
 }
+
+/* Custom range slider styling matching reference design */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: 9999px;
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0284C7;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.3);
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #0077C6;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0284C7;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.3);
+  cursor: pointer;
+}
+
