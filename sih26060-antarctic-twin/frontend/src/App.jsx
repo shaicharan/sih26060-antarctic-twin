@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Snowflake } from 'lucide-react';
 import StationDashboard from './components/StationDashboard';
 import WhatIfPanel from './components/WhatIfPanel';
 
@@ -38,11 +39,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           {/* Logo & Product Title */}
           <div className="flex items-center gap-3.5">
-            {/* Geometric Snowflake Icon */}
-            <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shadow-sm shrink-0">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 2v20m-9-9h18m-4.5-6.5l-9 9m0-9l9 9M7.5 4.5l9 15m-9 0l9-15" />
-              </svg>
+            {/* Circular Light Blue Snowflake Badge */}
+            <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shadow-sm shrink-0">
+              <Snowflake className="w-5 h-5 text-blue-600" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2.5 flex-wrap">
@@ -51,7 +50,7 @@ export default function App() {
                 </h1>
                 <span className="h-4 w-px bg-slate-300 hidden sm:inline-block"></span>
                 <span className="text-[11px] font-mono font-medium text-slate-500 uppercase tracking-wider">
-                  MAITRI RESEARCH STATION <span className="text-slate-400 font-normal">| 70°45′S, 11°44′E</span>
+                  MAITRI RESEARCH STATION
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-sans">
@@ -66,9 +65,8 @@ export default function App() {
               <span className={`w-2 h-2 rounded-full ${loading ? 'bg-amber-500 animate-pulse' : error ? 'bg-red-500' : 'bg-emerald-500'}`}></span>
               <span>{loading ? 'CONNECTING...' : error ? 'OFFLINE' : 'LIVE API CONNECTED'}</span>
             </div>
-            <div className="bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-md flex items-center gap-1.5 text-xs font-medium text-slate-700 shadow-xs" title="India (NCPOR)">
-              <span>🇮🇳</span>
-              <span className="font-mono text-[11px] text-slate-600">IN</span>
+            <div className="bg-slate-100 border border-slate-200 px-3 py-1 rounded-full text-xs font-mono font-semibold text-slate-600 shadow-xs">
+              70°45'S, 11°44'E
             </div>
           </div>
         </div>
@@ -76,31 +74,37 @@ export default function App() {
 
       {/* Main Content Container */}
       <main className="max-w-7xl mx-auto px-6 pt-6">
-        {/* Hero Section Banner with Panoramic Station Visual */}
-        <section className="relative mb-8 rounded-2xl overflow-hidden bg-gradient-to-r from-navy-900 via-navy-800 to-slate-900 text-white p-8 md:p-10 shadow-xl border border-navy-700/50">
-          {/* Subtle Snowy Mountain Graphic Background Overlay */}
-          <div 
-            className="absolute inset-0 opacity-25 bg-cover bg-center pointer-events-none mix-blend-overlay"
+        {/* Compact Hero Section Banner with Local Masked Background Image */}
+        <section className="relative mb-8 rounded-2xl overflow-hidden bg-[#F3F7FA] p-6 md:p-8 border border-slate-200/80 shadow-xs">
+          {/* Local Antarctic Station Background Image with Mask Gradient (z-index: 0) */}
+          <img 
+            src="/assets/antarctic-station-bg.png" 
+            alt="Antarctic Research Station"
+            className="absolute inset-0 w-full h-full object-cover object-right z-0 pointer-events-none"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=1600&q=80')`
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 25%, rgba(0,0,0,0.3) 45%, black 70%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, transparent 25%, rgba(0,0,0,0.3) 45%, black 70%)',
             }}
-          ></div>
+          />
 
-          <div className="relative z-10 max-w-2xl">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-mono uppercase tracking-widest text-cyan-300 font-semibold">
+          {/* Hero Text Content (z-index: 2, sitting above image on light faded left side) */}
+          <div className="relative z-20 max-w-xl">
+            <div className="flex items-center gap-2 mb-2.5">
+              <span className="text-[11px] font-mono uppercase tracking-widest text-blue-700 font-bold">
                 STATION TELEMETRY OVERVIEW
               </span>
-              <span className="h-px w-12 bg-cyan-400/50"></span>
+              <span className="h-px w-10 bg-blue-300"></span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white tracking-tight leading-tight mb-3">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-navy-900 tracking-tight leading-tight mb-2.5">
               Real-time Insights.<br className="hidden sm:inline" /> Smarter Decisions.
             </h2>
-            <p className="text-sm text-slate-300 font-normal leading-relaxed max-w-xl">
+            <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed max-w-lg font-medium">
               Monitor critical systems, assess operational risks, and simulate predictive what-if scenarios for a safer, more resilient Antarctic station.
             </p>
           </div>
         </section>
+
+
 
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 bg-white border border-slate-200/80 rounded-2xl shadow-sm">
@@ -140,5 +144,5 @@ export default function App() {
       </footer>
     </div>
   );
-
 }
+

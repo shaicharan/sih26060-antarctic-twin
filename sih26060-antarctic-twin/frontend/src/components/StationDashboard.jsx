@@ -1,4 +1,5 @@
 import React from 'react';
+import { Thermometer, Battery, Fuel, Shield } from 'lucide-react';
 
 /**
  * StationDashboard Component
@@ -19,45 +20,43 @@ export default function StationDashboard({ data }) {
   const fuelDays = fuel?.days_remaining ?? fuel?.days_until_exhaustion ?? 'N/A';
   const riskLevel = risk_assessment?.level ?? data?.risk ?? 'LOW';
 
-  // Risk badge styling mapping
+  // Risk badge styling mapping (Ensuring consistent "LOW RISK", "MODERATE RISK", "HIGH RISK" format)
   const getRiskBadge = (level) => {
-    switch (String(level).toUpperCase()) {
-      case 'HIGH':
-        return {
-          bg: 'bg-red-50 text-red-700 border-red-200',
-          dot: 'bg-red-500 animate-pulse',
-          label: '▲ HIGH RISK',
-        };
-      case 'MODERATE':
-        return {
-          bg: 'bg-amber-50 text-amber-700 border-amber-200',
-          dot: 'bg-amber-500 animate-pulse',
-          label: '▲ MODERATE RISK',
-        };
-      case 'LOW':
-      default:
-        return {
-          bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-          dot: 'bg-emerald-500',
-          label: '▲ LOW RISK',
-        };
+    const norm = String(level || 'LOW').toUpperCase();
+    if (norm.includes('HIGH')) {
+      return {
+        bg: 'bg-red-50 text-red-700 border-red-200',
+        dot: 'bg-red-500 animate-pulse',
+        label: '▲ HIGH RISK',
+      };
     }
+    if (norm.includes('MODERATE')) {
+      return {
+        bg: 'bg-amber-50 text-amber-700 border-amber-200',
+        dot: 'bg-amber-500 animate-pulse',
+        label: '▲ MODERATE RISK',
+      };
+    }
+    return {
+      bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      dot: 'bg-emerald-500',
+      label: '▲ LOW RISK',
+    };
   };
 
   const riskBadge = getRiskBadge(riskLevel);
 
   return (
-    <div className="w-full mb-8">
+    <div className="w-full mb-8 relative z-30">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
         {/* Stat Card 1: Outdoor Temperature (REAL Data) */}
         <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:shadow-md hover:border-blue-300 transition-all duration-200 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-start mb-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                  </svg>
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
+                  <Thermometer className="w-5 h-5 text-blue-600" />
                 </div>
                 <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
                   OUTDOOR TEMPERATURE
@@ -91,10 +90,8 @@ export default function StationDashboard({ data }) {
           <div>
             <div className="flex justify-between items-start mb-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                  </svg>
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
+                  <Battery className="w-5 h-5 text-blue-600" />
                 </div>
                 <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
                   BACKUP BATTERY
@@ -132,10 +129,8 @@ export default function StationDashboard({ data }) {
           <div>
             <div className="flex justify-between items-start mb-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                  </svg>
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
+                  <Fuel className="w-5 h-5 text-blue-600" />
                 </div>
                 <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
                   FUEL AUTONOMY
@@ -162,10 +157,8 @@ export default function StationDashboard({ data }) {
           <div>
             <div className="flex justify-between items-start mb-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751A11.959 11.959 0 0112 2.714z" />
-                  </svg>
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
+                  <Shield className="w-5 h-5 text-blue-600" />
                 </div>
                 <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">
                   OVERALL STATION RISK
@@ -200,5 +193,5 @@ export default function StationDashboard({ data }) {
       </div>
     </div>
   );
-
 }
+

@@ -370,20 +370,20 @@ export default function WhatIfPanel({ baselineData }) {
                   <td className="px-5 py-3.5 font-bold text-slate-900">Station Risk Status</td>
                   <td className="px-5 py-3.5">
                     <span className="px-2.5 py-0.5 rounded text-xs font-bold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">
-                      {simulationResult.comparison.risk_level_before}
+                      {formatRiskLabel(simulationResult.comparison.risk_level_before)}
                     </span>
                   </td>
                   <td className="px-5 py-3.5">
                     <span
                       className={`px-2.5 py-0.5 rounded text-xs font-bold font-mono border ${
-                        simulationResult.comparison.risk_level_after === 'HIGH'
+                        String(simulationResult.comparison.risk_level_after).toUpperCase().includes('HIGH')
                           ? 'bg-red-50 text-red-700 border-red-200'
-                          : simulationResult.comparison.risk_level_after === 'MODERATE'
+                          : String(simulationResult.comparison.risk_level_after).toUpperCase().includes('MODERATE')
                           ? 'bg-amber-50 text-amber-700 border-amber-200'
                           : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                       }`}
                     >
-                      {simulationResult.comparison.risk_level_after}
+                      {formatRiskLabel(simulationResult.comparison.risk_level_after)}
                     </span>
                   </td>
                   <td className="px-5 py-3.5 text-right font-mono text-xs font-semibold">
@@ -398,56 +398,41 @@ export default function WhatIfPanel({ baselineData }) {
             </table>
           </div>
 
-          {/* Conversational Gemini AI Advisor Panel (Operational Decision Support UI) */}
+          {/* Conversational Gemini AI Advisor Panel (Natural Conversational Q&A Thread) */}
           <div className="p-6 bg-slate-50/90 border-t border-slate-200">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 text-xs shadow-xs shrink-0">
-                  ✨
-                </div>
-                <div>
-                  <h4 className="text-xs font-mono font-bold text-navy-900 uppercase tracking-wider">
-                    Gemini Operations Advisor
-                  </h4>
-                  <p className="text-[11px] text-slate-500 font-sans">
-                    Operational decision-support layer grounded in real simulation data
-                  </p>
-                </div>
+              <div>
+                <h4 className="text-xs font-mono font-bold text-navy-900 uppercase tracking-wider">
+                  Gemini Operations Advisor
+                </h4>
+                <p className="text-[11px] text-slate-500 font-sans">
+                  Operational decision-support layer grounded in real simulation data
+                </p>
               </div>
               <span className="text-[10px] text-blue-700 font-mono bg-white px-2.5 py-1 rounded border border-blue-200">
                 POST /advise
               </span>
             </div>
 
-            {/* Conversation Thread */}
+            {/* Conversation Thread — Plain natural conversational thread format */}
             <div className="space-y-4 mb-4 max-h-96 overflow-y-auto pr-1">
               {conversationHistory.map((turn, idx) => (
-                <div key={idx} className="space-y-2.5">
+                <div key={idx} className="space-y-3">
                   {turn.question && (
                     <div className="flex justify-end">
-                      <div className="bg-blue-50 border border-blue-200 text-navy-900 rounded-xl px-4 py-2.5 text-xs max-w-xl shadow-xs font-sans">
-                        <span className="font-mono font-semibold text-blue-700 text-[10px] block mb-0.5 uppercase tracking-wider">👤 User / Judge Question</span>
+                      <div className="bg-blue-50 text-slate-800 rounded-2xl rounded-tr-xs px-4 py-2.5 text-xs font-sans max-w-xl shadow-xs border-0">
                         {turn.question}
                       </div>
                     </div>
                   )}
                   <div className="flex justify-start">
-                    <div className={`border rounded-xl p-4.5 text-xs max-w-2xl shadow-xs font-sans leading-relaxed ${
-                      turn.isFallback
-                        ? 'bg-amber-50/80 border-amber-200 text-amber-900'
-                        : 'bg-white border-slate-200 text-slate-800'
-                    }`}>
-                      <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-100">
-                        <span className="font-mono font-bold text-blue-800 text-[11px] flex items-center gap-1.5 uppercase tracking-wider">
-                          <span>✨</span> {turn.isFallback ? 'AI Advisor Fallback' : 'Gemini Operations Analysis'}
+                    <div className="text-xs text-slate-700 font-sans leading-relaxed max-w-2xl px-1 py-0.5">
+                      {turn.isFallback && (
+                        <span className="inline-block text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-800 mb-1">
+                          Fallback Advice
                         </span>
-                        {turn.isFallback && (
-                          <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 uppercase">
-                            Fallback Mode
-                          </span>
-                        )}
-                      </div>
-                      <p className="whitespace-pre-wrap">{turn.answer}</p>
+                      )}
+                      <p className="whitespace-pre-wrap leading-relaxed">{turn.answer}</p>
                     </div>
                   </div>
                 </div>
@@ -455,9 +440,9 @@ export default function WhatIfPanel({ baselineData }) {
 
               {isAdvising && (
                 <div className="flex justify-start">
-                  <div className="bg-white border border-slate-200 text-blue-700 rounded-xl px-4 py-3 text-xs flex items-center gap-2 shadow-xs font-sans">
+                  <div className="text-xs text-blue-700 font-sans flex items-center gap-2 py-1 px-1">
                     <span className="w-3.5 h-3.5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></span>
-                    <span>Gemini AI Advisor is analyzing station numbers...</span>
+                    <span>Analyzing station data...</span>
                   </div>
                 </div>
               )}
@@ -492,8 +477,17 @@ export default function WhatIfPanel({ baselineData }) {
     </div>
   );
 
+
 }
 
 function round2(num) {
   return Math.round((num + Number.EPSILON) * 100) / 100;
 }
+
+function formatRiskLabel(lvl) {
+  if (!lvl) return 'LOW RISK';
+  const str = String(lvl).toUpperCase().trim();
+  if (str.endsWith('RISK')) return str;
+  return `${str} RISK`;
+}
+
