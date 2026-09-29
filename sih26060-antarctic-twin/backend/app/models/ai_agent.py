@@ -110,10 +110,12 @@ def call_gemini_api(prompt: str, api_key: str) -> str:
     Executes Gemini API call using google-genai or google.generativeai SDK.
     """
     model_candidates = [
+        "gemini-2.5-flash",
+        "gemini-2.0-flash",
+        "gemini-1.5-flash",
         "gemini-flash-lite-latest",
         "gemini-3.5-flash-lite",
-        "gemini-3.5-flash",
-        "gemini-3.6-flash",
+        "gemini-1.5-pro",
     ]
 
 
