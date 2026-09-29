@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Snowflake } from 'lucide-react';
 import StationDashboard from './components/StationDashboard';
 import WhatIfPanel from './components/WhatIfPanel';
-
-const API_BASE_URL = 'http://127.0.0.1:8000';
+import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
   const [stationData, setStationData] = useState(null);
@@ -110,7 +109,7 @@ export default function App() {
           <div className="flex flex-col items-center justify-center py-20 bg-white border border-slate-200/80 rounded-2xl shadow-sm">
             <div className="w-10 h-10 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
             <p className="text-slate-800 font-semibold text-sm">Loading station data...</p>
-            <p className="text-slate-500 font-mono text-xs mt-1">Connecting to http://127.0.0.1:8000/station/state</p>
+            <p className="text-slate-500 font-mono text-xs mt-1">Connecting to {API_BASE_URL}/station/state</p>
           </div>
         ) : error ? (
           <div className="p-8 bg-red-50/90 border border-red-200 rounded-2xl text-center my-8 shadow-md">
@@ -118,7 +117,7 @@ export default function App() {
             <h3 className="text-lg font-serif font-bold text-red-900">Failed to Load Station Data</h3>
             <p className="text-xs text-red-700 mt-1 max-w-md mx-auto">{error}</p>
             <p className="text-xs text-slate-600 mt-4">
-              Make sure the FastAPI backend server is running on <code className="bg-white border border-slate-300 px-2 py-0.5 rounded text-blue-700 font-mono">http://127.0.0.1:8000</code>.
+              Make sure the backend API server is accessible at <code className="bg-white border border-slate-300 px-2 py-0.5 rounded text-blue-700 font-mono">{API_BASE_URL}</code>.
             </p>
             <button
               onClick={() => window.location.reload()}

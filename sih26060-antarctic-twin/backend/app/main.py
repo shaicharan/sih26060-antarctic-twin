@@ -24,11 +24,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Register routers
+# Register routers (both root and /api prefix for compatibility with Vercel rewrites)
 app.include_router(station_router, tags=["Station & Simulation"])
+app.include_router(station_router, prefix="/api", tags=["Station & Simulation"])
 
 
 @app.get("/")
+@app.get("/api")
 def root():
     return {
         "status": "online",

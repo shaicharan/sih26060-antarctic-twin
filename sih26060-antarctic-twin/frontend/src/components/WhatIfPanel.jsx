@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-const API_BASE_URL = 'http://127.0.0.1:8000';
+import { API_BASE_URL } from '../apiConfig';
 const FALLBACK_ADVICE =
   "[AI Advisor Fallback] Fuel reserves declining faster than normal due to increased heating demand. Recommend reducing non-critical loads and reviewing resupply schedule.";
 
